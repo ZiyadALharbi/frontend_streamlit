@@ -20,7 +20,7 @@ import pathlib
 # ---------------------------
 BASE_DIR = pathlib.Path(__file__).parent.resolve()
 
-FASTAPI_URL = os.getenv("FASTAPI_URL", "http://127.0.0.1:8000")  
+FASTAPI_URL = os.getenv("FASTAPI_URL", "https://fastapipetra-production.up.railway.app")  
 BACKGROUND_IMAGE_PATH = str(BASE_DIR / "background.png")
 INTRO_VIDEO_PATH = str(BASE_DIR / "earth_zoom.mp4")
 
@@ -30,6 +30,7 @@ DEMO_COORDS = [
     {"name": "Detection #2", "lat": 26.420, "lon": 49.978, "conf": 0.78},
     {"name": "Detection #3", "lat": 26.230, "lon": 50.205, "conf": 0.62},
 ]
+
 
 # ---------------------------
 # HELPERS
