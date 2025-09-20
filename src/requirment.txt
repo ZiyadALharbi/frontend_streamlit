@@ -1,0 +1,4 @@
+streamlit==1.49.0
+requests==2.32.5
+pillow==11.3.0
+pydeck==0.9.1
