@@ -431,22 +431,35 @@ with tabs[1]:
 # TAB 3: EVALUATION
 # ---------------------------
 with tabs[2]:
-    st.markdown("## 🧠 Evaluation of Petra CNN Model")
+    st.markdown("## 🧠 Evaluation of Petra YOLO Model")
     st.caption("Architecture • Labels • Performance Metrics")
 
-    # --- Section 1: CNN Architecture ---
-    st.markdown("### 📐 CNN Architecture")
+    # --- Section 1: YOLO Architecture ---
+    st.markdown("### 📐 YOLO Architecture")
     st.markdown("""
-    Petra's Convolutional Neural Network (CNN) is designed specifically to detect **oil spill patterns** 
-    in satellite imagery. Here's how it works:
+### **A. Backbone (Feature Extraction):**
 
-    - **Input Layer**: Accepts RGB satellite images (resized to 128x128 pixels).
-    - **Convolution Layers**: Extract spatial features using 3x3 kernels and ReLU activation.
-    - **Pooling Layers (MaxPooling)**: Reduce spatial dimensions to focus on the most important patterns.
-    - **Batch Normalization + Dropout**: Improve training stability and prevent overfitting.
-    - **Flatten + Dense Layers**: Combine extracted features and learn class-specific patterns.
-    - **Output Layer (Sigmoid)**: Outputs a probability between 0 (clean sea) and 1 (oil spill).
-    """)
+- **Purpose**: Extract hierarchical features from input images
+- **Structure**: Series of convolutional layers with residual connections
+- **Your Model**: 125 layers, starts with 3→64→128 channels
+- **Key Features**:
+    - Cross Stage Partial (CSP) connections for gradient flow
+    - Spatial Pyramid Pooling (SPP) for multi-scale features
+
+### **B. Neck (Feature Fusion):**
+
+- **Purpose**: Combine features from different scales
+- **Structure**: Feature Pyramid Network (FPN) + Path Aggregation Network (PAN)
+- **Why Important**: Oil spills can appear at different sizes in satellite imagery
+
+### **C. Head (Detection Output):**
+
+- **Purpose**: Generate final predictions
+- **Outputs**:
+    - **Bounding Box Coordinates**: (x, y, width, height)
+    - **Objectness Score**: Probability an object exists
+    - **Class Probabilities**: Probability for each class (oil spill types)
+""")
 
     st.info("This model was trained on real satellite images labeled manually as **Oil Spill** or **Gas Spill**.")
 
@@ -588,6 +601,7 @@ with tabs[3]:
                 st.info("Preview not available. The file will still be sent to the API.")
 
     st.caption("FastAPI returns annotated images with bounding boxes around detected oil spills.")
+
 
 
 
