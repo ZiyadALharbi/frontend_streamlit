@@ -369,14 +369,14 @@ with tabs[0]:
     advanced deep learning techniques and real-time monitoring.
 
     ### 📡 Core Idea
-    - Petra uses **Convolutional Neural Networks (CNNs)** trained on real **SAR and optical satellite images**.
+    - Petra uses **YOLO** trained on real **SAR and optical satellite images**.
     - The model can **detect oil slick patterns** across large water surfaces.
     - It can integrate with **FastAPI** as a backend and a **Streamlit dashboard** for real-time monitoring.
 
     ### 🧠 Technical Highlights
-    - **Image Preprocessing:** Images are enhanced, normalized, and resized for CNN input.
+    - **Image Preprocessing:** Images are enhanced, normalized, and resized for YOLO input.
     - **Data Augmentation:** Improves generalization across different lighting, angles, and resolutions.
-    - **Model Architecture:** Multi-layer CNN with convolution, pooling, batch normalization, and dense layers.
+    - **Model Architecture:**  YOLO Architecture. with 125 layers
     - **Deployment:** FastAPI backend for prediction + Streamlit front-end with a 3D satellite map view.
 
     ### 🌊 Why It Matters
@@ -588,6 +588,7 @@ with tabs[3]:
                 st.info("Preview not available. The file will still be sent to the API.")
 
     st.caption("FastAPI returns annotated images with bounding boxes around detected oil spills.")
+
 
 
 
