@@ -20,9 +20,9 @@ import pathlib
 # ---------------------------
 BASE_DIR = pathlib.Path(__file__).parent.resolve()
 
-FASTAPI_URL = os.getenv("FASTAPI_URL", "https://fastapipetra-production.up.railway.app")  
+FASTAPI_URL = os.getenv("FASTAPI_URL", "http://127.0.0.1:8000")  
 BACKGROUND_IMAGE_PATH = str(BASE_DIR / "background.png")
-INTRO_VIDEO_PATH = str(BASE_DIR / "earth_zoom.mp4")
+INTRO_VIDEO_PATH = "earth_zoom.mp4"
 
 # Sample demo points (edit/expand as you like)
 DEMO_COORDS = [
@@ -30,7 +30,6 @@ DEMO_COORDS = [
     {"name": "Detection #2", "lat": 26.420, "lon": 49.978, "conf": 0.78},
     {"name": "Detection #3", "lat": 26.230, "lon": 50.205, "conf": 0.62},
 ]
-
 
 # ---------------------------
 # HELPERS
@@ -369,15 +368,15 @@ with tabs[0]:
     advanced deep learning techniques and real-time monitoring.
 
     ### 📡 Core Idea
-    - Petra uses **Convolutional Neural Networks (CNNs)** trained on real **SAR and optical satellite images**.
-    - The model can **detect oil slick patterns** across large water surfaces.
+    - Petra uses **YOLO (You Only Look Once) object detection ** trained on real **SAR and optical satellite images**.
+    - The model can **precisely locate oil slick patterns** with bounding boxes across large water surfaces.
     - It can integrate with **FastAPI** as a backend and a **Streamlit dashboard** for real-time monitoring.
 
     ### 🧠 Technical Highlights
-    - **Image Preprocessing:** Images are enhanced, normalized, and resized for CNN input.
+    - **Image Preprocessing:** Images are enhanced, normalized, and resized for YOLO input.
     - **Data Augmentation:** Improves generalization across different lighting, angles, and resolutions.
-    - **Model Architecture:** Multi-layer CNN with convolution, pooling, batch normalization, and dense layers.
-    - **Deployment:** FastAPI backend for prediction + Streamlit front-end with a 3D satellite map view.
+    - **Model Architecture:** YOLO architecture optimized for detecting small oil spill features in large satellite images.
+    - **Deployment:** FastAPI backend for detection + Streamlit front-end with a 3D satellite map view.
 
     ### 🌊 Why It Matters
     - Oil spills threaten marine ecosystems and coastal economies.
@@ -390,7 +389,7 @@ with tabs[0]:
     - Provide API endpoints for integration with maritime authorities
     """)
 
-    st.info("Scroll to the next tabs to explore the Satellite demo and run your own predictions.")
+    st.info("Scroll to the next tabs to explore the Satellite demo and run your own detection.")
 
 
 # ---------------------------
@@ -431,24 +430,29 @@ with tabs[1]:
 # TAB 3: EVALUATION
 # ---------------------------
 with tabs[2]:
-    st.markdown("## 🧠 Evaluation of Petra CNN Model")
+    st.markdown("## 🧠 Evaluation of Petra YOLO Model")
     st.caption("Architecture • Labels • Performance Metrics")
 
-    # --- Section 1: CNN Architecture ---
-    st.markdown("### 📐 CNN Architecture")
+    # --- Section 1: YOLO Architecture ---
+    st.markdown("### 📐 YOLO Segmentation Architecture")
     st.markdown("""
-    Petra's Convolutional Neural Network (CNN) is designed specifically to detect **oil spill patterns** 
-    in satellite imagery. Here's how it works:
+    Petra leverages the **YOLO Segmentation** architecture for precise oil spill detection in satellite imagery:
 
-    - **Input Layer**: Accepts RGB satellite images (resized to 128x128 pixels).
-    - **Convolution Layers**: Extract spatial features using 3x3 kernels and ReLU activation.
-    - **Pooling Layers (MaxPooling)**: Reduce spatial dimensions to focus on the most important patterns.
-    - **Batch Normalization + Dropout**: Improve training stability and prevent overfitting.
-    - **Flatten + Dense Layers**: Combine extracted features and learn class-specific patterns.
-    - **Output Layer (Sigmoid)**: Outputs a probability between 0 (clean sea) and 1 (oil spill).
+    - **Input Layer**: Accepts satellite images of varying sizes, automatically resized to **640×640** for processing.
+    - **Backbone (CSPDarknet)**: Extracts rich multi-scale features from the input images, capturing subtle oil spill patterns.
+    - **Neck (PAN-FPN)**: Fuses shallow and deep features to improve detection of both small and large spills.
+    - **Head (Anchor-Free Segmentation Head)** predicts simultaneously:
+        - **Bounding Boxes**: (x, y, width, height)
+        - **Class Probabilities**: e.g., Sheen, Truecolor, Rainbow
+        - **Segmentation Masks**: pixel-accurate outlines of each oil spill
+    - **Output**: For each detected spill, the model provides bounding box, class label, confidence score, and polygon mask.
+
+    **Additional Highlights:**
+    - **Advanced Augmentations**: Mosaic, Mixup, Copy-Paste, Random Erasing, Rotation, Translation
+    - **Optimizer**: AdamW with Dropout → reduces overfitting and improves stability
     """)
 
-    st.info("This model was trained on real satellite images labeled manually as **Oil Spill** or **Gas Spill**.")
+    st.info("This YOLO model was trained on annotated satellite images with precise segmentation masks for different oil spill types.")
 
     import pathlib
 
@@ -528,7 +532,7 @@ with tabs[2]:
             color: #e0e0e0;
             box-shadow: 0 2px 15px rgba(0,0,0,0.3);
         ">
-        Petra's CNN shows **strong performance** on unseen data:
+        Petra's shows **strong performance** on unseen data:
         <ul>
           <li>⚡ High accuracy with balanced precision/recall</li>
           <li>🌊 Very low false positives on clean ocean images</li>
@@ -632,6 +636,9 @@ with tabs[3]:
                 st.info("Preview not available. The file will still be sent to the API.")
 
     st.caption("FastAPI returns annotated images with bounding boxes around detected oil spills.")
+
+
+
 
 
 
