@@ -22,7 +22,7 @@ BASE_DIR = pathlib.Path(__file__).parent.resolve()
 
 FASTAPI_URL = os.getenv("FASTAPI_URL", "https://fastapipetra-production.up.railway.app")  
 BACKGROUND_IMAGE_PATH = str(BASE_DIR / "background.png")
-INTRO_VIDEO_PATH = str("src/earth_zoom.mp4")
+INTRO_VIDEO_PATH = str(BASE_DIR / "earth_zoom.mp4")
 
 # Sample demo points (edit/expand as you like)
 DEMO_COORDS = [
@@ -588,6 +588,7 @@ with tabs[3]:
                 st.info("Preview not available. The file will still be sent to the API.")
 
     st.caption("FastAPI returns annotated images with bounding boxes around detected oil spills.")
+
 
 
 
