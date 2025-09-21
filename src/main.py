@@ -498,7 +498,7 @@ with tabs[2]:
     </style>
     """, unsafe_allow_html=True)
     
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4,col5 = st.columns(5)
     with col1:
         st.markdown('<div class="metric-box"><div class="metric-title">Accuracy</div><div class="metric-value">93.7%</div></div>', unsafe_allow_html=True)
     with col2:
@@ -507,7 +507,10 @@ with tabs[2]:
         st.markdown('<div class="metric-box"><div class="metric-title">Recall</div><div class="metric-value">91.9%</div></div>', unsafe_allow_html=True)
     with col4:
         st.markdown('<div class="metric-box"><div class="metric-title">F1-Score</div><div class="metric-value">88.7</div></div>', unsafe_allow_html=True)
-   
+    with col5:
+        st.markdown('<div class="metric-box"><div class="metric-title">Loss</div><div class="metric-value">0.847</div></div>', unsafe_allow_html=True)
+
+  
     
     st.markdown(
         """
@@ -581,6 +584,7 @@ with tabs[3]:
                 st.info("Preview not available. The file will still be sent to the API.")
 
     st.caption("FastAPI returns annotated images with bounding boxes around detected oil spills.")
+
 
 
 
