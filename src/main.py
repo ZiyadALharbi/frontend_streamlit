@@ -441,7 +441,7 @@ with tabs[2]:
 
 - **Purpose**: Extract hierarchical features from input images
 - **Structure**: Series of convolutional layers with residual connections
-- **Your Model**: 125 layers, starts with 3→64→128 channels
+- **Model**: 125 layers, starts with 3→64→128 channels
 - **Key Features**:
     - Cross Stage Partial (CSP) connections for gradient flow
     - Spatial Pyramid Pooling (SPP) for multi-scale features
@@ -467,25 +467,6 @@ with tabs[2]:
 
     BASE_DIR = pathlib.Path(__file__).parent.resolve()
 
-    def image_path(filename: str) -> str:
-        return str(BASE_DIR / filename)
-    # --- Section 2: Labels and Sample Images ---
-    st.markdown("### 🏷️ Labels and Training Examples")
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("#### 🛢️ Real Oil Spill")
-        st.image(image_path("oil_1.jpg"), caption="Oil Spill Example 1")
-    with col2:
-        st.markdown("#### 🛢️ Train Oil Spill")
-        st.image(image_path("train_oil.jpg"), caption="Clean Sea Example 1")
-
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("#### 🛢️ gas Spill")
-        st.image(image_path("gas_1.jpg"), caption="Oil Spill Example 1")
-    with col2:
-        st.markdown("#### 🛢️ gas Spill")
-        st.image(image_path("train_gas.jpg"), caption="Clean Sea Example 1")
 
     st.markdown("### 📊 Evaluation Metrics on Validation Set")
 
@@ -519,13 +500,13 @@ with tabs[2]:
     
     col1, col2, col3, col4, col5 = st.columns(5)
     with col1:
-        st.markdown('<div class="metric-box"><div class="metric-title">Accuracy</div><div class="metric-value">93%</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-box"><div class="metric-title">Accuracy</div><div class="metric-value">93.7%</div></div>', unsafe_allow_html=True)
     with col2:
-        st.markdown('<div class="metric-box"><div class="metric-title">Precision</div><div class="metric-value">91%</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-box"><div class="metric-title">Precision</div><div class="metric-value">85.7%</div></div>', unsafe_allow_html=True)
     with col3:
-        st.markdown('<div class="metric-box"><div class="metric-title">Recall</div><div class="metric-value">89%</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-box"><div class="metric-title">Recall</div><div class="metric-value">91.9%</div></div>', unsafe_allow_html=True)
     with col4:
-        st.markdown('<div class="metric-box"><div class="metric-title">F1-Score</div><div class="metric-value">0.90</div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="metric-box"><div class="metric-title">F1-Score</div><div class="metric-value">88.7</div></div>', unsafe_allow_html=True)
     with col5:
         st.markdown('<div class="metric-box"><div class="metric-title">Loss</div><div class="metric-value">0.18</div></div>', unsafe_allow_html=True)
     
@@ -541,7 +522,7 @@ with tabs[2]:
             color: #e0e0e0;
             box-shadow: 0 2px 15px rgba(0,0,0,0.3);
         ">
-        Petra's CNN shows **strong performance** on unseen data:
+        Petra's YOLO shows **strong performance** on unseen data:
         <ul>
           <li>⚡ High accuracy with balanced precision/recall</li>
           <li>🌊 Very low false positives on clean ocean images</li>
@@ -552,7 +533,7 @@ with tabs[2]:
         unsafe_allow_html=True
     )
     
-    st.success("✅ Petra achieved over **93% accuracy** distinguishing oil spills from clean sea surfaces.")
+    st.success("✅ Petra achieved over **93.7% accuracy** distinguishing oil spills from clean sea surfaces.")
 
 
 # ---------------------------
@@ -601,6 +582,7 @@ with tabs[3]:
                 st.info("Preview not available. The file will still be sent to the API.")
 
     st.caption("FastAPI returns annotated images with bounding boxes around detected oil spills.")
+
 
 
 
