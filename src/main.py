@@ -630,7 +630,7 @@ with tabs[4]:
     team_members = [
         {"name": "Luluh",      "role": "Data Engineer",             "image": "luluh.jpg",
          "linkedin": "https://www.linkedin.com/in/luluh-alyahya-050024284/"},
-        {"name": "Ziyad",      "role": "ML Engineer",               "image": "ziyad.jpg",
+        {"name": "Ziyad",      "role": "AI Engineer",               "image": "ziyad.jpg",
          "linkedin": "https://www.linkedin.com/in/ziyad-alharbi-294059222/"},
         {"name": "Lames",      "role": "Preprocessing Specialist",  "image": "lames.jpg",
          "linkedin": "https://www.linkedin.com/in/lamis-alsharif-itil%C2%AE4-60a3542b2/"},
@@ -657,6 +657,7 @@ with tabs[4]:
                 """,
                 unsafe_allow_html=True
             )
+
 
 
 
