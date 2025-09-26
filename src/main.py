@@ -333,7 +333,7 @@ st.markdown("""
 }
 </style>
 """, unsafe_allow_html=True)
-tabs = st.tabs(["Intro", "Satellite", "Evaluation", "Test Model"])
+tabs = st.tabs(["Intro", "Satellite", "Evaluation", "Test Model","Team Members"])
 
 # Show video banner only on tabs[1] and tabs[2]
 active_tab_index = st.session_state.get("active_tab_index", 0)
@@ -584,6 +584,81 @@ with tabs[3]:
                 st.info("Preview not available. The file will still be sent to the API.")
 
     st.caption("FastAPI returns annotated images with bounding boxes around detected oil spills.")
+
+# ---------------------------
+# TAB 4: TEAM MEMBERS
+# ---------------------------
+with tabs[4]:
+    st.markdown("## 👥 Meet the Petra Team")
+    st.caption("The dedicated team behind Petra — Oil Spill Detection")
+
+    # --- CSS ---
+    st.markdown("""
+    <style>
+    .member-card { text-align:center; margin-top: 10px; }
+    .member-photo {
+        width: 170px; height: 170px; border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid rgba(255,255,255,0.15);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        transition: transform .25s ease;
+    }
+    .member-photo:hover { transform: scale(1.05); }
+    .member-name { margin-top: 10px; font-size: 1.1rem; font-weight: 700; color: #e6e6e6; }
+    .member-role { font-size: .92rem; color: #a8a8a8; margin-bottom: 6px; }
+    .linkedin-link a { color: #0A66C2; text-decoration: none; font-weight: 600; }
+    .linkedin-link a:hover { text-decoration: underline; }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # --- helpers ---
+    from pathlib import Path
+    import base64
+
+    def img_data_uri(path: Path) -> str:
+        """Return a base64 data URI for the image (works on Streamlit Cloud and locally)."""
+        ext = path.suffix.lower()
+        mime = "image/jpeg" if ext in [".jpg", ".jpeg"] else "image/png"
+        with open(path, "rb") as f:
+            b64 = base64.b64encode(f.read()).decode("utf-8")
+        return f"data:{mime};base64,{b64}"
+
+    # IMPORTANT: images live under repo/src/team/*.jpg (as in your screenshot)
+    # Use paths relative to this file so it works everywhere.
+    TEAM_DIR = BASE_DIR / "team"
+
+    team_members = [
+        {"name": "Luluh",      "role": "Data Engineer",             "image": "luluh.jpg",
+         "linkedin": "https://www.linkedin.com/in/luluh-alyahya-050024284/"},
+        {"name": "Ziyad",      "role": "ML Engineer",               "image": "ziyad.jpg",
+         "linkedin": "https://www.linkedin.com/in/ziyad-alharbi-294059222/"},
+        {"name": "Lames",      "role": "Preprocessing Specialist",  "image": "lames.jpg",
+         "linkedin": "https://www.linkedin.com/in/lamis-alsharif-itil%C2%AE4-60a3542b2/"},
+        {"name": "Maymoonah",  "role": "Frontend Developer",        "image": "maymoonah.jpg",
+         "linkedin": "https://www.linkedin.com/in/maymoonah-alolah-997161101/"},
+        {"name": "Faisal",     "role": "Team Lead",                 "image": "faisal.jpg",
+         "linkedin": "https://www.linkedin.com/in/faisal-alfodialy/"},
+    ]
+
+    # render horizontally
+    cols = st.columns(len(team_members))
+    for col, m in zip(cols, team_members):
+        img_path = TEAM_DIR / m["image"]  # e.g., src/team/faisal.jpg
+        src = img_data_uri(img_path)      # embed as data URI (no broken paths)
+        with col:
+            st.markdown(
+                f"""
+                <div class="member-card">
+                    <img class="member-photo" src="{src}" alt="{m['name']}">
+                    <div class="member-name">{m['name']}</div>
+                    <div class="member-role">{m['role']}</div>
+                    <div class="linkedin-link"><a href="{m['linkedin']}" target="_blank">LinkedIn Profile</a></div>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+
 
 
 
